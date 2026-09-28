@@ -1,84 +1,162 @@
 # Secondary Brain Injury ML
 
+Explainable machine learning for early prediction of secondary brain injury in neurocritical care using MIMIC-IV data.
+
 ## Overview
-This project focuses on developing an explainable machine learning model for predicting Secondary Brain Injury (SBI) in neurocritical care patients using the MIMIC-IV Database. The project aims to identify clinically relevant patterns in routinely recorded ICU data and evaluate machine learning approaches for early SBI prediction.
+
+Secondary brain injury (SBI) is an important complication in critically ill neurological patients. This project focuses on developing and validating machine learning models for early prediction of secondary brain injury using clinical and physiological variables from neurocritical care patients.
+
+The project is designed as a reproducible research framework, including data extraction, preprocessing, feature engineering, model development, evaluation, and explainability.
 
 ## Research Objective
-To develop and validate a machine learning model for predicting secondary brain injury (SBI) in neurocritical care patients using clinical data from the MIMIC-IV Database.
+
+To develop and evaluate machine learning models for predicting secondary brain injury among adult neurocritical care patients using routinely available clinical and physiological data.
 
 ## Dataset
-MIMIC-IV Database
+
+This project uses:
+
+- MIMIC-IV Clinical Database
+- MIMIC-IV Waveform Database
+- PhysioNet
+
+Access to MIMIC-IV requires completion of the applicable PhysioNet credentialing and data-use requirements.
+
+> **Data restriction:** Patient-level MIMIC-IV data are not included in this repository. Only code, documentation, and permitted derived materials are shared.
 
 ## Study Population
-Adult neurocritical-care ICU patients
-TBI
-ICH
-ischemic stroke
-SAH
+
+The study focuses on adult critically ill patients with major neurological conditions, including:
+
+- Traumatic Brain Injury (TBI)
+- Intracerebral Hemorrhage (ICH)
+- Ischemic Stroke
+- Subarachnoid Hemorrhage (SAH)
+
+The analytical unit is based on ICU stays, with appropriate patient-level separation during model development and evaluation.
 
 ## Outcome Definition
-Secondary Brain Injury (SBI)
-ICP/MAP/SpO₂/neurological deterioration criteria
+
+The primary outcome is a binary classification of Secondary Brain Injury (SBI):
+
+- SBI = Yes
+- SBI = No
+
+Potential clinical indicators include sustained physiological deterioration and neurological worsening, including:
+
+- Intracranial pressure (ICP) elevation
+- Mean arterial pressure (MAP) reduction
+- Oxygen desaturation
+- Neurological deterioration
+- Escalation of neuroprotective management
+- Relevant radiological evidence where available
+
+The operational outcome definition is documented in the study methodology.
 
 ## Predictors
-HR
-MAP
-SpO₂
-RR
-GCS
-derived 6-hour GCS/MAP features
+
+The machine learning pipeline includes routinely available clinical and physiological variables such as:
+
+- Heart Rate (HR)
+- Mean Arterial Pressure (MAP)
+- Oxygen Saturation (SpO₂)
+- Respiratory Rate (RR)
+- Glasgow Coma Scale (GCS)
+- GCS-derived features
+- MAP-derived features
+- Other eligible physiological measurements
+
+Time-window based features include summary measures such as mean, minimum, maximum, first, last, and measurement counts where applicable.
 
 ## Machine Learning Models
-Logistic Regression
-Random Forest
-Gradient Boosting
-XGBoost
-LSTM
+
+The project framework supports evaluation of multiple machine learning approaches, including:
+
+- Logistic Regression
+- Random Forest
+- Gradient Boosting
+- XGBoost
+- Long Short-Term Memory (LSTM)
+
+Model development includes training, validation, hyperparameter optimization, threshold selection, and independent test evaluation.
+
+## Model Evaluation
+
+Model performance is evaluated using:
+
+- AUROC
+- Sensitivity
+- Specificity
+- Precision
+- Recall
+- F1-score
+- Accuracy
+- Brier score
+- Calibration analysis
+- Confusion matrix
+
+Where applicable, confidence intervals and statistical comparisons are also considered.
 
 ## Explainability
-SHAP
-feature importance
-calibration
-AUROC
+
+Explainable AI methods are incorporated to understand model predictions and identify important clinical predictors.
+
+The project includes:
+
+- SHAP analysis
+- Feature importance
+- Global feature interpretation
+- Individual prediction interpretation
+- Model calibration
+
+## Reproducibility
+
+The repository is structured to support reproducible machine learning research.
+
+The workflow includes:
+
+1. Data extraction
+2. Data cleaning
+3. Feature engineering
+4. Missing-data handling
+5. Dataset construction
+6. Patient/ICU-level data splitting
+7. Model training
+8. Hyperparameter optimization
+9. Model evaluation
+10. Explainability analysis
 
 ## Repository Structure
+
+```text
 secondary-brain-injury-ml/
+│
 ├── README.md
 ├── LICENSE
 ├── .gitignore
+├── requirements.txt
+│
 ├── data/
+│   └── README.md
+│
 ├── notebooks/
+│   ├── 01_data_extraction.ipynb
+│   ├── 02_preprocessing.ipynb
+│   ├── 03_feature_engineering.ipynb
+│   ├── 04_model_training.ipynb
+│   └── 05_model_evaluation.ipynb
+│
 ├── src/
-├── models/
+│   ├── preprocessing.py
+│   ├── feature_engineering.py
+│   ├── train.py
+│   ├── evaluate.py
+│   └── explainability.py
+│
 ├── results/
+│   ├── figures/
+│   ├── metrics/
+│   └── shap/
+│
 └── docs/
-
-## Reproducibility
-The repository provides reproducible code and documentation for data preprocessing, feature engineering, model development, evaluation, and explainability. Random seeds and analysis workflows are documented where applicable. MIMIC-IV data are not included in this repository and require authorized access through PhysioNet.
-
-## Data Access
-The study uses the MIMIC-IV Database. Access to the dataset is restricted and requires credentialed access through PhysioNet. No patient-level data are included in this repository. Researchers should obtain access directly from PhysioNet and comply with all applicable data-use requirements.
-
-## Ethical and Data-Use Considerations
-This project uses the MIMIC-IV Database, which contains de-identified clinical data. Access to the database is restricted and requires completion of the applicable PhysioNet credentialing and data-use requirements.
-
-No raw MIMIC-IV patient-level data are included in this repository.
-Patient privacy and confidentiality are maintained throughout the project.
-The repository contains only code, documentation, and permitted non-identifiable research outputs.
-Users must obtain authorized access to MIMIC-IV independently and comply with the applicable PhysioNet Data Use Agreement and database terms.
-The models developed in this repository are intended for research purposes and should not be used as a standalone clinical decision-making tool.
-
-## Current Status
-Research and model development are ongoing. The repository is being developed to support reproducible preprocessing, feature engineering, machine learning model development, evaluation, and explainability for secondary brain injury prediction.
-
-## Citation
-## Citation
-
-If you use the MIMIC-IV database in this project, please cite:
-
-Johnson AEW, Bulgarelli L, Shen L, Gayles A, Shammout A, Horng S, et al. MIMIC-IV, a freely accessible electronic health record dataset. Scientific Data. 2023;10:1. https://doi.org/10.1038/s41597-022-01899-x
-
-## License
-This project is licensed under the MIT License.
-
-The source code may be used, modified, and distributed under the terms of the MIT License. The MIMIC-IV database is not included in this repository and remains subject to the data-use terms and access requirements of PhysioNet.
+    └── methodology.md
